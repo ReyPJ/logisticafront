@@ -1,17 +1,10 @@
-'use client';
-import api from './utils/api'
-import { useEffect } from 'react';
+import TableNewOrders from './components/TableNewOrders';
 
 export default function Home() {
 
-  useEffect(() => {
-    api.get('/').then((response) => {
-      console.log('Respuesta de la API:', response.data);
-    });
-  }, []);
-
   return (
     <div>
+      <TableNewOrders />
     </div>
   );
 }
