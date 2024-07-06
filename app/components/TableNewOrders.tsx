@@ -25,7 +25,7 @@ const NexOrdersTab: React.FC = () => {
         try {
             return JSON.parse(address);
         } catch (error) {
-            // console.error('Error al parsear la dirección:', error)
+            console.error('Error al parsear la dirección:', error)
             return {} as Address;
         }
     };
