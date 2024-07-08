@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Logistica App",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,14 +17,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className="flex justify-center items-center justify-items-center h-[100vh]">
-          <div className="w-[1800px] h-[800px] border bg-gray-50 shadow rounded-lg">
+        <main className="flex justify-center items-center justify-items-center h-screen">
+          <div className="w-[1800px] h-[800px] border bg-gray-50 shadow rounded-lg overflow-y-scroll">
             <div>
-              <div className="bg-red-600 w-full h-full rounded-t-lg flex justify-between">
-                <h2 className="text-md text-white p-4">YA-GO.MX</h2>
-                <h2 className="text-md text-white p-4">Sistema de control de logistica para pedidos en espera de envio.</h2>
+              <div className="sticky top-0 z-10">
+                <div className="bg-red-600 w-full h-full rounded-t-lg flex justify-between">
+                  <h2 className="text-md text-white p-4">YA-GO.MX</h2>
+                  <h2 className="text-md text-white p-4">Sistema de control de logistica para pedidos en espera de envio.</h2>
+                </div>
+                <MainNav />
               </div>
-              <MainNav />
               {children}
             </div>
           </div>

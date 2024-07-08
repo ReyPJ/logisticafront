@@ -1,10 +1,10 @@
 import NexOrdersTab from "../components/TableNewOrders"
-export default function Prepared() {
+export default function Shipped() {
 
 
     return (
         <div>
-            <NexOrdersTab status="prepared" />
+            <NexOrdersTab status="shipped" />
         </div>
     )
 }

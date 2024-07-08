@@ -1,5 +1,5 @@
 export interface Order {
-    id: number,
+    order_id: number,
     customer_name: string;
     customer_last_name: string;
     shipping_address: string;
@@ -26,4 +26,8 @@ export interface Address {
     state: string;
     postcode: string;
     country: string;
+}
+
+export interface OrdersProps {
+    status: string;
 }

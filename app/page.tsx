@@ -1,10 +1,10 @@
-import TableNewOrders from './components/TableNewOrders';
+import NexOrdersTab from './components/TableNewOrders';
 
 export default function Home() {
 
   return (
     <div>
-      <TableNewOrders />
+      <NexOrdersTab status='new' />
     </div>
   );
 }

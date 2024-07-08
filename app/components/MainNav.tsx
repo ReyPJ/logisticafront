@@ -13,8 +13,6 @@ const NavBar = () => {
 
     const navItems = [
         { href: '/', label: 'Nuevos pedidos' },
-        { href: '/uber', label: 'Nuevos pedidos Uber' },
-        { href: '/pickit', label: 'Nuevos pedidos Pickit' },
         { href: '/preparados', label: 'Pedidos preparados' },
         { href: '/enviados', label: 'Pedidos enviados' },
     ];
