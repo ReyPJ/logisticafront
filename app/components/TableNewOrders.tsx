@@ -59,7 +59,12 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                         order.order_id === orderId ? { ...order, status: newStatus } : order
                     )
                 );
-                alert('Orden marcada como preparada');
+                if (newStatus === OrderStatus.SHIPPED) {
+                    alert(`Orden ${orderId} marcada como enviada.`);
+                }
+                if (newStatus === OrderStatus.PREPARED) {
+                    alert(`Orden ${orderId} marcada como preparada.`);
+                }
             }
         } catch (error) {
             console.error(`Error al marcar la orden como ${newStatus}:`, error);
