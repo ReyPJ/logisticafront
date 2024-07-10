@@ -5,8 +5,13 @@ import { Order, OrdersProps } from "../interfaces/Order";
 import api from "../utils/api";
 import getButtonText from "../utils/helpers/getButtonText";
 import parseAddress from "../utils/helpers/parseAddress";
+import saveOrderData from '../utils/helpers/saveOrder';
+import deleteOrder from '../utils/helpers/deleteOrder';
+import TooltipIcon from '../utils/helpers/tooltipsaved';
 import { MdOutlineLocalPrintshop, MdDelete } from "react-icons/md";
 import { IoIosSave } from "react-icons/io";
+import { BsFillCloudCheckFill } from "react-icons/bs";
+
 
 
 
@@ -18,6 +23,7 @@ export enum OrderStatus {
 
 const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
     const [orders, setOrders] = useState<Order[]>([]);
+    const [savedOrders, setSavedOrders] = useState<number[]>([]);
 
     useEffect(() => {
         const fecthOrderData = async () => {
@@ -30,7 +36,17 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
             }
         };
 
+        const fetchSavedOrders = async () => {
+            try {
+                const response = await api.get<Order[]>(`old-orders/`);
+                const savedOrderIds = response.data.map(order => order.order_id);
+                setSavedOrders(savedOrderIds);
+            } catch (error) {
+                console.error('Error al obtener las órdenes guardadas:', error);
+            }
+        };
         fecthOrderData();
+        fetchSavedOrders();
 
     }, [status]);
 
@@ -153,6 +169,10 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
         }
     };
 
+    const isOrderSaved = (orderId: number) => {
+        return savedOrders.includes(orderId);
+    };
+
 
     const tailwindStyles = `
     /* Ajusta estilos de TailwindCSS para impresión si es necesario */
@@ -182,6 +202,13 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                         <MdOutlineLocalPrintshop size={24} />
                                     </button>
                                 )}
+                                {isOrderSaved(order.order_id) && (
+                                    <span className="text-blue-500">
+                                        <TooltipIcon tooltipText="Orden guardada">
+                                            <BsFillCloudCheckFill size={35} />
+                                        </TooltipIcon>
+                                    </span>
+                                )}
                                 <span className=
                                     {
                                         `px-3 py-2 text-sm font-semibold rounded-full 
@@ -208,7 +235,7 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                             </div>
                             {(order.status === 'new') && (
                                 <div className='mb-4 md:pb-6 sm:pb-10 pb-12'>
-                                    <QRCodeSVG value={`${api.defaults.baseURL}${order.order_id}/prepared/`} size={60} />
+                                    <QRCodeSVG value={`${api.defaults.baseURL}orders/${order.order_id}/prepared/`} size={60} />
                                 </div>
                             )}
                             <div className="flex justify-between items-center absolute bottom-0 left-0 right-0 p-4">
@@ -223,10 +250,16 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                 )}
                                 {(order.status === 'shipped') && (
                                     <div className='flex justify-between gap-5 px-3'>
-                                        <button className='text-red-700'>
+                                        <button
+                                            className='text-red-700'
+                                            onClick={() => deleteOrder(order.order_id)}
+                                        >
                                             <MdDelete size={28} />
                                         </button>
-                                        <button className='text-blue-700'>
+                                        <button
+                                            className='text-blue-700'
+                                            onClick={() => saveOrderData(order.order_id)}
+                                        >
                                             <IoIosSave size={28} />
                                         </button>
                                     </div>

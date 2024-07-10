@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import MainNav from "./components/MainNav";
+import { useRouter } from "next/router";
 
 export const metadata: Metadata = {
   title: "Logistica App",
@@ -8,12 +9,14 @@ export const metadata: Metadata = {
 };
 
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html lang="en">
       <body>
@@ -26,6 +29,7 @@ export default function RootLayout({
                   <h2 className="text-md text-white p-4">Sistema de control de logistica para pedidos en espera de envio.</h2>
                 </div>
                 <MainNav />
+
               </div>
               {children}
             </div>

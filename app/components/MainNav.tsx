@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
+
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const pathname = usePathname();
@@ -15,6 +16,7 @@ const NavBar = () => {
         { href: '/', label: 'Nuevos pedidos' },
         { href: '/preparados', label: 'Pedidos preparados' },
         { href: '/enviados', label: 'Pedidos enviados' },
+        { href: '/guardados', label: 'Pedidos guardados' }
     ];
 
     return (
