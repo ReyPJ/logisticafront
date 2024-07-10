@@ -5,7 +5,9 @@ import { Order, OrdersProps } from "../interfaces/Order";
 import api from "../utils/api";
 import getButtonText from "../utils/helpers/getButtonText";
 import parseAddress from "../utils/helpers/parseAddress";
-import { MdOutlineLocalPrintshop } from "react-icons/md";
+import { MdOutlineLocalPrintshop, MdDelete } from "react-icons/md";
+import { IoIosSave } from "react-icons/io";
+
 
 
 export enum OrderStatus {
@@ -20,7 +22,7 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
     useEffect(() => {
         const fecthOrderData = async () => {
             try {
-                const response = await api.get<Order[]>(`/?status=${status}`);
+                const response = await api.get<Order[]>(`orders/?status=${status}`);
                 setOrders(response.data);
                 console.log('Respuesta de la API:', response.data)
             } catch (error) {
@@ -51,7 +53,7 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
         }
 
         try {
-            const response = await api.post(`/${orderId}/${endpoint}/`);
+            const response = await api.post(`orders/${orderId}/${endpoint}/`);
             if (response.status === 201) {
                 console.log(`Orden ${orderId} marcada como ${newStatus}`);
                 setOrders(prevOrders =>
@@ -172,13 +174,19 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                 <h2 className="text-lg font-semibold">
                                     Orden ID: {order.order_id}
                                 </h2>
-                                <button
-                                    className="text-blue-500 hover:text-blue-600 focus:outline-none"
-                                    onClick={() => printOrder(order)}
-                                >
-                                    <MdOutlineLocalPrintshop size={24} />
-                                </button>
-                                <span className={`px-3 py-2 text-sm font-semibold rounded-full ${order.status === 'prepared' ? 'bg-yellow-500 text-white' : 'bg-blue-500 text-white'}`}>
+                                {(order.status === 'new') && (
+                                    <button
+                                        className="text-blue-500 hover:text-blue-600 focus:outline-none"
+                                        onClick={() => printOrder(order)}
+                                    >
+                                        <MdOutlineLocalPrintshop size={24} />
+                                    </button>
+                                )}
+                                <span className=
+                                    {
+                                        `px-3 py-2 text-sm font-semibold rounded-full 
+                                        ${order.status === 'new' ? 'bg-blue-500 text-white'
+                                            : order.status === 'prepared' ? 'bg-yellow-500 text-white' : order.status === 'shipped' ? 'bg-green-500 text-white' : ''}`}>
                                     {order.status === 'new' ? 'Nueva orden' : order.status === 'prepared' ? 'Preparada' : order.status === 'shipped' ? 'Enviada' : ''}
                                 </span>
                             </div>
@@ -198,17 +206,31 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                     ))}
                                 </ul>
                             </div>
-                            <div className='mb-4 md:pb-6 sm:pb-10 pb-12'>
-                                <QRCodeSVG value={`${api.defaults.baseURL}${order.order_id}/prepared/`} size={60} />
-                            </div>
+                            {(order.status === 'new') && (
+                                <div className='mb-4 md:pb-6 sm:pb-10 pb-12'>
+                                    <QRCodeSVG value={`${api.defaults.baseURL}${order.order_id}/prepared/`} size={60} />
+                                </div>
+                            )}
                             <div className="flex justify-between items-center absolute bottom-0 left-0 right-0 p-4">
                                 <p className="text-gray-600 text-sm">Fecha de Creación: {new Date(order.created_at).toLocaleDateString()}</p>
-                                <button
-                                    className={`text-white sm:text-sm text-xs bg-blue-500 py-2 md:px-4 px-1 rounded-md hover:bg-blue-600 focus:outline-none`}
-                                    onClick={() => handleOrderStatusChange(order.order_id, order.status)}
-                                >
-                                    {getButtonText(order.status)}
-                                </button>
+                                {(order.status === 'new' || order.status === 'prepared') && (
+                                    <button
+                                        className={`text-white sm:text-sm text-xs bg-blue-500 py-2 md:px-4 px-1 rounded-md hover:bg-blue-600 focus:outline-none`}
+                                        onClick={() => handleOrderStatusChange(order.order_id, order.status)}
+                                    >
+                                        {getButtonText(order.status)}
+                                    </button>
+                                )}
+                                {(order.status === 'shipped') && (
+                                    <div className='flex justify-between gap-5 px-3'>
+                                        <button className='text-red-700'>
+                                            <MdDelete size={28} />
+                                        </button>
+                                        <button className='text-blue-700'>
+                                            <IoIosSave size={28} />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
