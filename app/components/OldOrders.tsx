@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { Order } from "../interfaces/Order";
 import api from "../utils/api";
+import TooltipIcon from "../utils/helpers/tooltipsaved";
+import parseAddress from "../utils/helpers/parseAddress";
 
 const OldOrdersTab: React.FC = () => {
     const [oldOrders, setOldOrder] = useState<Order[]>([]);
@@ -40,13 +42,18 @@ const OldOrdersTab: React.FC = () => {
                                     {new Date(order.created_at).toLocaleDateString()}
                                 </span>
                             </div>
-                            <div className="mb-4"></div>
+                            <div className="mb-4">
+                                <h3 className="text-gray-700 text-sm font-medium">Orden ID: {order.order_id}</h3>
+                            </div>
                             <div className="mb-4">
                                 <h3 className="text-gray-700 text-sm font-medium mb-2">Producto</h3>
                                 <p className="text-sm text-gray-600">
                                     {order.item[0].name} - {order.item[0].quantity} {order.item[0].quantity === 1 ? 'unidad' : 'unidades'}
                                 </p>
                             </div>
+                            <TooltipIcon tooltipText={parseAddress(order.shipping_address)}>
+                                <span className="text-sm text-gray-700">Direccion.</span>
+                            </TooltipIcon>
                         </div>
                     ))}
                 </div>
