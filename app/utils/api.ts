@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://209.38.172.75/api/',
+    baseURL: 'https://logistic-api-07a766e9f876.herokuapp.com/api/',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
