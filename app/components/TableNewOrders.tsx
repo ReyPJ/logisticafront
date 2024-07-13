@@ -94,7 +94,7 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
         let qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=`;
 
         if (api.defaults && api.defaults.baseURL) {
-            qrCodeUrl += encodeURIComponent(api.defaults.baseURL + '/orders/' + order.order_id + '/prepared/');
+            qrCodeUrl += encodeURIComponent(api.defaults.baseURL + 'orders/' + order.order_id + '/prepared/');
         } else {
             console.error('No se pudo obtener la URL base de la API.');
             return;
