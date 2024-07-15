@@ -50,9 +50,10 @@ const OldOrdersTab: React.FC = () => {
                                 <p className="text-sm text-gray-600">
                                     {order.item[0].name} - {order.item[0].quantity} {order.item[0].quantity === 1 ? 'unidad' : 'unidades'}
                                 </p>
+                                <p className="text-sm text-gray-600">SKU: <strong>{order.item[0].sku}</strong></p>
                             </div>
                             <TooltipIcon tooltipText={parseAddress(order.shipping_address)}>
-                                <span className="text-sm text-gray-700">Direccion.</span>
+                                <span className="text-sm text-blue-500 hover:text-blue-700 underline">Direccion.</span>
                             </TooltipIcon>
                         </div>
                     ))}

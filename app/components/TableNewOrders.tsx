@@ -77,6 +77,8 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                         order.order_id === orderId ? { ...order, status: newStatus } : order
                     )
                 );
+                saveOrderData(orderId)
+
                 if (newStatus === OrderStatus.SHIPPED) {
                     alert(`Orden ${orderId} marcada como enviada.`);
                 }
@@ -113,8 +115,6 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                             .printable, .printable * {
                                 visibility: visible;
                             }
-                            /* Estilos de TailwindCSS */
-                            ${tailwindStyles}
                         }
                     </style>
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
@@ -173,12 +173,6 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
         return savedOrders.includes(orderId);
     };
 
-
-    const tailwindStyles = `
-    /* Ajusta estilos de TailwindCSS para impresión si es necesario */
-    /* Puedes copiar los estilos necesarios desde tu archivo tailwind.css aquí */
-    `;
-
     return (
         <div className="w-full mx-auto px-4 py-8">
             <h1 className="text-2xl font-bold mb-6 text-center">Lista de Órdenes</h1>
@@ -229,7 +223,10 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                 <h3 className="text-gray-700 text-sm font-medium mb-2">Productos</h3>
                                 <ul className="list-disc list-inside">
                                     {order.item.map((item) => (
-                                        <li key={item.id}>{item.name} - Cantidad: {item.quantity}</li>
+                                        <div key={item.id}>
+                                            <li>{item.name} - Cantidad: {item.quantity}</li>
+                                            <li>SKU: <strong>{item.sku}</strong></li>
+                                        </div>
                                     ))}
                                 </ul>
                             </div>
