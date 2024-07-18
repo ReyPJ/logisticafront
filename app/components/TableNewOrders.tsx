@@ -178,108 +178,12 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
     return savedOrders.includes(orderId);
   };
 
-<<<<<<< HEAD
-    return (
-        <div className="w-full mx-auto px-4 py-8">
-            <h1 className="text-2xl font-bold mb-6 text-center">Lista de Órdenes</h1>
-            {orders.length === 0 ? (
-                <div className="text-center text-xl text-gray-600">
-                    No hay órdenes disponibles aún...
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {orders.map((order) => (
-                        <div key={order.order_id} className="bg-white relative shadow-md rounded-lg p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-lg font-semibold">
-                                    Orden ID: {order.order_id}
-                                </h2>
-                                {(order.status === 'new') && (
-                                    <button
-                                        className="text-blue-500 hover:text-blue-600 focus:outline-none"
-                                        onClick={() => printOrder(order)}
-                                    >
-                                        <MdOutlineLocalPrintshop size={24} />
-                                    </button>
-                                )}
-                                {isOrderSaved(order.order_id) && (
-                                    <span className="text-blue-500">
-                                        <TooltipIcon tooltipText="Orden guardada">
-                                            <BsFillCloudCheckFill size={35} />
-                                        </TooltipIcon>
-                                    </span>
-                                )}
-                                <span className=
-                                    {
-                                        `px-3 py-2 text-sm font-semibold rounded-full 
-                                        ${order.status === 'new' ? 'bg-blue-500 text-white'
-                                            : order.status === 'prepared' ? 'bg-yellow-500 text-white' : order.status === 'shipped' ? 'bg-green-500 text-white' : ''}`}>
-                                    {order.status === 'new' ? 'Nueva orden' : order.status === 'prepared' ? 'Preparada' : order.status === 'shipped' ? 'Enviada' : ''}
-                                </span>
-                            </div>
-                            <div className="mb-4">
-                                <h3 className="text-gray-700 text-sm font-medium mb-2">Cliente</h3>
-                                <p>{order.customer_name} {order.customer_last_name}</p>
-                            </div>
-                            <div className="mb-4">
-                                <h3 className="text-gray-700 text-sm font-medium mb-2">Dirección de Envío</h3>
-                                <p className="text-sm">{parseAddress(order.shipping_address)}</p>
-                            </div>
-                            <div className="mb-4 md:pb-2">
-                                <h3 className="text-gray-700 text-sm font-medium mb-2">Producto/s</h3>
-                                <ul className="list-none list-inside flex flex-col gap-2">
-                                    {order.item.map((item) => (
-                                        <div key={item.id}>
-                                            <li>{item.name} - Cantidad: {item.quantity}</li>
-                                            <li>SKU: <strong>{item.sku}</strong></li>
-                                        </div>
-                                    ))}
-                                </ul>
-                            </div>
-                            {(order.status === 'new') && (
-                                <div className='mb-4 md:pb-6 sm:pb-10 pb-12'>
-                                    <QRCodeSVG value={`${api.defaults.baseURL}orders/${order.order_id}/prepared/`} size={60} />
-                                </div>
-                            )}
-                            <div className="flex justify-between items-center absolute bottom-0 left-0 right-0 p-4">
-                                <p className="text-gray-600 text-sm">Fecha de Creación: {new Date(order.created_at).toLocaleDateString()}</p>
-                                {(order.status === 'new' || order.status === 'prepared') && (
-                                    <button
-                                        className={`text-white sm:text-sm text-xs bg-blue-500 py-2 md:px-4 px-1 rounded-md hover:bg-blue-600 focus:outline-none`}
-                                        onClick={() => handleOrderStatusChange(order.order_id, order.status)}
-                                    >
-                                        {getButtonText(order.status)}
-                                    </button>
-                                )}
-                                {(order.status === 'shipped') && (
-                                    <div className='flex justify-between gap-5 px-3'>
-                                        <button
-                                            className='text-red-700'
-                                            onClick={() => deleteOrder(order.order_id)}
-                                        >
-                                            <MdDelete size={28} />
-                                        </button>
-                                        <button
-                                            className='text-blue-700'
-                                            onClick={() => saveOrderData(order.order_id)}
-                                        >
-                                            <IoIosSave size={28} />
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-=======
   return (
     <div className="w-full mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6 text-center">Lista de Órdenes</h1>
       {orders.length === 0 ? (
         <div className="text-center text-xl text-gray-600">
           No hay órdenes disponibles aún...
->>>>>>> 6bf15de4fce2e2b11dc950a86544d2fb77d22a89
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
