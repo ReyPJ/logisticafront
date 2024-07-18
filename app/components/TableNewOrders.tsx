@@ -220,8 +220,8 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
                                 <p className="text-sm">{parseAddress(order.shipping_address)}</p>
                             </div>
                             <div className="mb-4 md:pb-2">
-                                <h3 className="text-gray-700 text-sm font-medium mb-2">Productos</h3>
-                                <ul className="list-disc list-inside">
+                                <h3 className="text-gray-700 text-sm font-medium mb-2">Producto/s</h3>
+                                <ul className="list-none list-inside flex flex-col gap-2">
                                     {order.item.map((item) => (
                                         <div key={item.id}>
                                             <li>{item.name} - Cantidad: {item.quantity}</li>
