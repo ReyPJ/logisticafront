@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const api = axios.create({
     baseURL: 'https://logistic-api-07a766e9f876.herokuapp.com/api/',
