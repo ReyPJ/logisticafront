@@ -7,8 +7,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
                 <div>
                     <div className="sticky top-0 z-10">
                         <div className="bg-red-600 w-full h-full rounded-t-lg md:flex md:justify-between text-center block">
-                            <h2 className="text-md text-white md:p-4 p-1">YA-GO.MX</h2>
-                            <h2 className="text-md text-white md:p-4 p-1">Sistema de control de logistica para pedidos en espera de envio.</h2>
+                            <h2 className="text-md text-white p-4">YA-GO.MX</h2>
                         </div>
                         <MainNav />
                     </div>
