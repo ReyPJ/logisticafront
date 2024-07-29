@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Order, OrdersProps } from "../interfaces/Order";
 import api from "../utils/api";
@@ -21,6 +21,7 @@ export enum OrderStatus {
 const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [savedOrders, setSavedOrders] = useState<number[]>([]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const fecthOrderData = async () => {
@@ -45,6 +46,32 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
     fecthOrderData();
     fetchSavedOrders();
   }, [status]);
+
+  useEffect(() => {
+    const newOrderExists = orders.some(order => order.status === OrderStatus.NEW)
+
+    if (newOrderExists) {
+      if (!audioRef.current) {
+        audioRef.current = new Audio("/notification.mp3");
+        audioRef.current.loop = true;
+        audioRef.current.play();
+      }
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+  }, [orders]);
+
+  const handleOrderClick = (orderId: number) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+      alert("Sonido de notificación detenido." + orderId);
+    }
+  }
 
   const handleOrderStatusChange = async (
     orderId: number,
@@ -191,6 +218,7 @@ const NexOrdersTab: React.FC<OrdersProps> = ({ status }) => {
             <div
               key={order.order_id}
               className="bg-white relative shadow-md rounded-lg p-6"
+              onClick={() => handleOrderClick(order.order_id)}
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">
